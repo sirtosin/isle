@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import bg from "@/app/img/hero.png";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -11,9 +12,9 @@ export default function Banner() {
             Creating the Best Day Ever!
           </h1>
           <p className="w-[200px] h-0.5 bg-[#D6A663] rounded-full"></p>
-          <p className="text-center w-max py-2 px-5 sm:text-xl bg-[#810A82] rounded">
+           <Link href="/register" className="text-center w-max py-2 px-5 sm:text-xl bg-[#810A82] rounded">
             Register
-          </p>
+          </Link>
         </div>
         <div className="w-full lg:w-1/2">
           <Image src={bg} className="w-full h-full" alt="" />
