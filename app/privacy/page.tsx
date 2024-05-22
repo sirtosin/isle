@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 export default function page() {
   return (
     <>
+      <Header />
       <div className="mx-auto p-10">
         {/* <Header /> */}
         <h2 className="text-center font-bold text-4xl my-5">Privacy Policy</h2>

@@ -3,11 +3,14 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-[#191C1F] py-10">
-      <Link href="/" className="text-3xl font-bold mb-5 text-white px-8 sm:px-16 cursor-pointer">
+    <div className="w-full bg-[#2E002F]/90 text-white py-10">
+      <Link
+        href="/"
+        className="text-xl font-bold mb-10 text-white px-8 sm:px-16 cursor-pointer italic"
+      >
         Walk The Isle{" "}
       </Link>
-      <div className="flex space-y-4 flex-col px-8 sm:px-16">
+      <div className="flex space-y-4 flex-col px-8 sm:px-16 mt-10">
         <Link href="/terms" className="text-[#77878F]">
           Terms and Condition
         </Link>

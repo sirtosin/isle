@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Header from "../components/Header";
 
 export default function page() {
   const [view, setView] = useState(0);
   return (
     <>
+      <Header />
       <div className="mx-auto p-10">
         <h2 className="text-center font-bold text-4xl my-5">
           {" "}
