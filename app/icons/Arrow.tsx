@@ -8,14 +8,14 @@ export const ArrowRight = () => (
   >
     <path
       d="M4.12793 11.3674H19.0184"
-      stroke="white"
+      stroke="#ACACAC"
       stroke-width="1.35367"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
     <path
       d="M12.9268 5.27588L19.0183 11.3674L12.9268 17.459"
-      stroke="white"
+      stroke="#ACACAC"
       stroke-width="1.35367"
       stroke-linecap="round"
       stroke-linejoin="round"

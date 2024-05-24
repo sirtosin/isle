@@ -1,8 +1,7 @@
 import React from "react";
 import { ArrowLeft, ArrowRight } from "../icons/Arrow";
 import Card from "./Card";
-import { categories } from "../constants";
-import { it } from "node:test";
+import { categories } from "../constants"
 
 export default function Categories() {
   return (

@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-[#2E002F]/90 text-white py-10">
+    <div className="w-full bg-[#2E002F]/90 text-white py-10  ">
       <Link
         href="/"
         className="text-xl font-bold mb-10 text-white px-8 sm:px-16 cursor-pointer italic"
@@ -16,9 +16,6 @@ export default function Footer() {
         </Link>
         <Link href="/privacy" className="text-[#77878F]">
           Privacy Policy
-        </Link>
-        <Link href="/contact" className="text-[#77878F]">
-          Contact Us
         </Link>
         <Link href="/delete" className="text-[#77878F]">
           Delete Account
