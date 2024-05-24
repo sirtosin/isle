@@ -29,7 +29,6 @@ export default function Header2() {
   const handleLogout = () => setAccount((prev) => !prev);
   const pathname = usePathname();
   const activePath = pathname?.replace("/", "");
-  console.log("pathname", pathname?.replace('/', ''));
   return (
     <header className="sticky top-0 left-0 z-50 bg-white border-b-[1px] border-white flex items-center justify-between lg:justify-around px-10">
       <div>

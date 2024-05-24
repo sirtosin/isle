@@ -185,7 +185,7 @@ export default function page() {
               <BackIcon2 />
             </p>
             <div className="my-10  mx-auto flex flex-col space-y-5 items-center justify-center w-full">
-              <span className="px-10">
+              <span className="sm:px-10">
                 <h2 className="text-3xl font-bold">Reset Password</h2>
                 <p className="text-[#656565]">
                   Reset your unique password to access your account to carry out
@@ -210,7 +210,7 @@ export default function page() {
                   type="password"
                   label="confirm Password"
                   name="cpassword"
-                  value={values.name}
+                  value={values.cpassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

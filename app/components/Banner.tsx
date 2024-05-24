@@ -9,7 +9,7 @@ export default function Banner() {
       <section className="">
         <div className="flex flex-col space-y-5 text-white p-2 w-full items-center justify-center">
           <h1 className="text-5xl text-center sm:text-8xl text-bold">Forever Begins Here!</h1>
-          <p className="w-full sm:w-1/2 text-center text-xs sm:text-xl">
+          <p className="w-3/4 sm:w-1/2 text-center text-xs sm:text-xl">
             Join Joseph and Zion's wedding, be a part of our union and share our
             joy with us. #AduraTemi’24
           </p>

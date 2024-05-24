@@ -6,6 +6,7 @@ import bg from "@/app/img/dash.png";
 import Image from 'next/image';
 import { Location } from '../icons/Location';
 import { QRIcon } from '../icons/Social';
+import Countdown from '../components/timer';
 
 export default function page() {
   const [category, setCategory] = useState('address')
@@ -13,41 +14,16 @@ export default function page() {
   return (
     <div>
       <Header2 />
-      <section className="w-3/4 mx-auto">
+      <section className="w-full sm:w-3/4 mx-auto p-5 sm:p-10">
         <Card>
-          <article className="flex items-center space-x-5 flex-wrap justify-center p-10">
-            <div className="flex items-center justify-center flex-col">
-              <h2 className="shadow-md rounded py-4 px-8 size-20 m-4 flex text-[#515151] font-semibold text-2xl items-center justify-center ">
-                5
-              </h2>
-              <p className="mb-4 font-semibold">Days</p>
-            </div>
-            <div className="flex items-center justify-center flex-col">
-              <h2 className="shadow-md rounded py-4 px-8 size-20 m-4 flex text-[#515151] font-semibold text-2xl items-center justify-center ">
-                5
-              </h2>
-              <p className="mb-4 font-semibold">Hours</p>
-            </div>
-            <div className="flex items-center justify-center flex-col">
-              <h2 className="shadow-md rounded py-4 px-8 size-20 m-4 flex text-[#515151] font-semibold text-2xl items-center justify-center ">
-                5
-              </h2>
-              <p className="mb-4 font-semibold">Minutes</p>
-            </div>
-            <div className="flex items-center justify-center flex-col">
-              <h2 className="shadow-md rounded py-4 px-8 size-20 m-4 flex text-[#515151] font-semibold text-2xl items-center justify-center ">
-                5
-              </h2>
-              <p className="mb-4 font-semibold">Seconds</p>
-            </div>
-          </article>
+          <Countdown targetDate={"June 1, 2024 00:00:00"} />
           <article className="flex items-center justify-center space-y-4 flex-col p-10">
-            <h2 className=" font-bold text-2xl">WalkTheAisle With Us</h2>
+            <h2 className=" font-bold text-2xl text-center">WalkTheAisle With Us</h2>
 
             <Image src={bg} className="w-2/3" alt="" />
           </article>
           <article className="p-10">
-            <div className="flex items-center  w-1/2 mx-auto">
+            <div className="flex items-center w-full sm:w-1/2 mx-auto">
               <p
                 onClick={() => setCategory("address")}
                 className={
@@ -70,14 +46,14 @@ export default function page() {
               </p>
             </div>
             {category === "address" ? (
-              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-10 py-5 mx-auto mt-5 w-2/3">
+              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-full sm:w-2/3">
                 <Location />
                 <p className="font-semibold">
                   Number 17, Fatomi bus stop, Lagos, Nigeria.
                 </p>
               </div>
             ) : (
-              <article className="flex items-center justify-center">
+              <article className="flex flex-col sm:flex-row items-center justify-center">
                 <Card>
                   <div className="w-[300px] p-10">
                     <span className="flex items-center space-x-5">

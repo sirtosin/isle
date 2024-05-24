@@ -7,10 +7,10 @@ export default function page() {
   return (
     <>
       <Header />
-      <div className="mx-auto p-10">
+      <div className="mx-auto p-5 sm:p-10">
         {/* <Header /> */}
-        <h2 className="text-center font-bold text-4xl my-5">Privacy Policy</h2>
-        <p className="text-sm text-gray-500 text-center w-3/4 mx-auto my-5">
+        <h2 className="text-center font-bold text-2xl sm:text-4xl my-5">Privacy Policy</h2>
+        <p className="text-sm text-gray-500 text-center w-full sm:w-3/4 mx-auto my-5">
           Walk The Isle ("we", "us", or "our") respects the privacy of our users
           ("you", "your", or "yours"). This Privacy Policy describes the
           information we collect from users of our mobile application ("App")

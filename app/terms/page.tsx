@@ -7,11 +7,11 @@ export default function page() {
   return (
     <>
       <Header />
-      <div className="mx-auto p-10">
-        <h2 className="text-center font-bold text-4xl my-5">
+      <div className="mx-auto p-5 sm:p-10">
+        <h2 className="text-center font-bold text-2xl  sm:text-4xl my-5">
           Terms and Conditions
         </h2>
-        <p className="text-sm text-gray-500 text-center w-3/4 mx-auto my-5">
+        <p className="text-sm text-gray-500 text-center w-full sm:w-3/4 mx-auto my-5">
           These Terms and Conditions ("Terms") govern your use of the Walk The
           Isle mobile application ("App"). By downloading or using the App, you
           agree to be bound by these Terms. If you disagree with any part of
