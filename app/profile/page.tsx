@@ -51,7 +51,7 @@ export default function page() {
   return (
     <div>
       <Header2 />
-      <section className="w-full sm:w-3/4 mx-auto p-5 sm:p-10">
+      <section className="w-full lg:w-3/4 mx-auto p-5 lg:p-10">
         <Card>
           {view === 0 && (
             <>

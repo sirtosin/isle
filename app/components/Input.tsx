@@ -27,22 +27,26 @@ export default function Input({
     setShowPassword((prev) => !prev);
   };
   return (
-    <div className="font-semibold capitalize flex flex-col space-y-1 w-full">
+    <div className="relative font-semibold capitalize flex flex-col space-y-1 w-full">
       <label htmlFor={label} className="text-sm font-medium">
         {label}
       </label>
+      <p className="top-7 absolute left-2">
+        {label?.includes("Phone") && `+234`}
+      </p>
       <input
         type={type === "password" ? (showPassword ? "text" : "password") : type}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
         name={name}
+        maxLength={label?.includes("Phone") && 10}
         placeholder={placeholder}
         className={`p-2 outline-none rounded ${
           value
             ? "border-[1px] border-[#3399FF] text-[#979797] bg-[#EEF6FF]"
             : "border-[1px] border-gray-300 text-sm"
-        } ${label === "Account Number:" && "text-[#3399FF]"}`}
+        } ${label?.includes("Phone") && "pl-16"}`}
       />
       {label === "Account Number:" && (
         <div

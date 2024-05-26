@@ -17,15 +17,6 @@ export default function Header() {
       </div>
       <nav className="hidden lg:flex items-center justify-between h-[80px] shadow-sm px-20">
         <div className="flex space-x-10 items-center">
-          <Link href="/privacy" className="cursor-pointer">
-            {" "}
-            Privacy
-          </Link>
-
-          <Link href="/terms" className="cursor-pointer">
-            {" "}
-            Terms
-          </Link>
 
           <Link
             href="/login"
@@ -55,13 +46,7 @@ export default function Header() {
           </div>
           {toggle && (
             <div className="flex flex-col space-y-4 absolute top-20  bg-white p-4 rounded right-0 shadow">
-              <Link href="/privacy" className="cursor-pointer color">
-                Privacy
-              </Link>
 
-              <Link href="/terms" className="cursor-pointer color">
-                Terms
-              </Link>
 
               <Link
                 href="/login"

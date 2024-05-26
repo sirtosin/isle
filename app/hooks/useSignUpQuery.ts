@@ -13,7 +13,8 @@ import { useEffect, useState } from "react";
 export const useSignUpQuery = () => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
-  const [view, setView] = useState(0);
+  const [view, setView] = useState(1);
+  const [loading2, setLoading2] = useState(false);
   const length = 6;
   const [modal, setModal] = useState(false);
   const [otp, setOtp] = useState(Array(length).fill(""));
@@ -56,17 +57,17 @@ export const useSignUpQuery = () => {
     password: values.password?.trim(),
     name: values.name?.trim(),
     role: "user",
-    phone: `234${values.phone?.toString()?.substring(1)}`,
+    phone: `234${values.phone?.toString()}`,
     tableId: values.table,
   };
 
   const { mutate } = useMutation({
     mutationFn: () => postApi(`users`, payload),
     onSuccess: (data) => {
-  //  Toast({ title: data.responseMessage, error: true });
+      //  Toast({ title: data.responseMessage, error: true });
       console.log("data", data);
       handleReset(payload);
-      setModal(true)
+      setModal(true);
       dispatch(login(data?.data));
       localStorage.setItem("auth", data?.data.token);
 
@@ -78,27 +79,41 @@ export const useSignUpQuery = () => {
   });
 
   const getOtp = async () => {
+    setLoading2(true);
+
     const payload = {
       email: values.email,
-      phone: `234${values.phone?.toString()?.substring(1)}`,
+      phone: `234${values.phone?.toString()}`,
     };
-    console.log("payload", payload);
     const res = await postApi("otp/generate", payload);
-    Toast({ title: res.message, error: false });
+    if (res?.response?.data?.message) {
+      Toast({ title: res.response.data.message, error: true });
+      setLoading2(false);
+      setView(0);
+      return;
+    } else {
+      setView(1);
+      setLoading2(false);
+      Toast({ title: res?.message, error: false });
+    }
   };
   const validateOtp = async () => {
-    setLoading(true);
-    const res = await postApi("otp/validate", {
-      email: values.email,
-      otp: otp?.join(""),
-    });
-    if (res.message === "Otp validation is successful") {
-      Toast({ title: res.message, error: false });
-      setView(2);
-      return;
+    if (otp?.join("")?.length === 6) {
+      setLoading(true);
+      const res = await postApi("otp/validate", {
+        email: values.email,
+        otp: otp?.join(""),
+      });
+      if (res.message === "Otp validation is successful") {
+        Toast({ title: res.message, error: false });
+        setLoading(false);
+        setView(2);
+        return;
+      }
+      Toast({ title: res.response?.data?.message, error: true });
+      setLoading(false);
     }
-    Toast({ title: res.response?.data?.message, error: true });
-    setLoading(false);
+
   };
   const getTables = async () => {
     const res = await getApi("tables");
@@ -121,8 +136,8 @@ export const useSignUpQuery = () => {
     user?.table && getTableID();
   }, [user?.table]);
   useEffect(() => {
-    otp?.join('')?.length === 6 && validateOtp();
-  }, [otp?.join('')]);
+    otp?.join("")?.length === 6 && validateOtp();
+  }, [otp?.join("")]);
   return {
     handleSubmit,
     values,
@@ -143,5 +158,6 @@ export const useSignUpQuery = () => {
     length,
     tableId,
     handleLogout,
+    loading2,
   };
 };

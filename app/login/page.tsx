@@ -38,6 +38,7 @@ export default function page() {
     loading,
     validateOtp,
     length,
+    loading2,
   } = useLoginQuery();
   const inputRefs: any = useRef([]);
   const handleModal = () => setModal((prev) => !prev);
@@ -60,11 +61,11 @@ export default function page() {
       index > 0 &&
       otp[index] === ""
     ) {
-      inputRefs.current[index - 1]?.focus();
+      inputRefs?.current[index - 1]?.focus();
     }
   };
   useEffect(() => {
-    view === 2 && inputRefs.current[0]?.focus();
+    view === 1 && inputRefs?.current[0]?.focus();
   }, [view]);
   const handleOtp = (e: any) => {
     e.preventDefault();
@@ -72,8 +73,24 @@ export default function page() {
       Toast({ title: "Fill All Fields", error: true });
       return;
     }
-    setView(1);
     getOtp();
+  };
+  const [seconds, setSeconds] = useState(90); // 1:30 minutes in second9
+  useEffect(() => {
+    if (view === 1) {
+      const interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [seconds, view]);
+  const formatTime = (time: any) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
   return (
     <div className="flex overflow-hidden h-screen ">
@@ -150,7 +167,7 @@ export default function page() {
             >
               <BackIcon2 />
             </p>
-            <div className="my-10 mx-auto flex flex-col space-y-5 items-center justify-center lg:w-1/2 w-full">
+            <div className="my-10 mx-auto flex flex-col space-y-5 items-center justify-center sm:w-3/4 lg:w-1/2 w-full">
               <span>
                 <h2 className="text-3xl font-bold">Verify Your Account</h2>
                 <p className="text-[#656565]">
@@ -164,7 +181,7 @@ export default function page() {
                     key={index}
                     ref={(ref: any) => (inputRefs.current[index] = ref)}
                     maxLength={1}
-                    type="text"
+                    type="number"
                     value={digit}
                     className="size-12 m-2 border-[1px] border-[#E4E7E9] p-2 rounded text-center "
                     onChange={(e: any) =>
@@ -174,12 +191,15 @@ export default function page() {
                   />
                 ))}
               </div>
-              <small
-                onClick={handleOtp}
-                className="!mt-0  ml-auto cursor-pointer font-semibold"
-              >
-                Don’t receive OTP? Resend OTP
-              </small>
+              <aside className="w-full flex items-center justify-between">
+                <p>{formatTime(seconds)}</p>
+                <small
+                  onClick={seconds !== 0 ? () => {} : handleOtp}
+                  className="!mt-0  ml-auto cursor-pointer font-semibold"
+                >
+                  Don’t receive OTP? Resend OTP
+                </small>
+              </aside>
               <Button
                 loading={loading}
                 onClick={validateOtp}
@@ -275,7 +295,7 @@ export default function page() {
 
                 <Button
                   icon={<ArrowLogin />}
-                  loading={false}
+                  loading={loading2}
                   onClick={handleOtp}
                   label="continue"
                   styles="bg-[#810A82] w-full  my-5"

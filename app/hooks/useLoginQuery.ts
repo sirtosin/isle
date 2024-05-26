@@ -16,6 +16,7 @@ export const useLoginQuery = () => {
   const [otp, setOtp] = useState(Array(length).fill(""));
   const [view, setView] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const navigate = useRouter();
   const [modal, setModal] = useState(false);
   const defaultValue = {
@@ -45,7 +46,7 @@ export const useLoginQuery = () => {
   };
 
   const payload: any = {
-    phone: `234${values.phone?.toString()?.substring(0)}`,
+    phone: `234${values.phone?.toString()}`,
     password: values.password?.trim(),
   };
 
@@ -68,16 +69,39 @@ export const useLoginQuery = () => {
     },
   });
   const getOtp = async () => {
-    const res = await postApi("otp/generate", { email: values.email });
+    setLoading2(true);
+    const payload = {
+      email: values.email,
+      phone: `234${values.phone?.toString()}`,
+    };
+    const res = await postApi("otp/generate", payload);
+    if (res?.response?.data?.message) {
+      Toast({ title: res.response.data.message, error: true });
+      setLoading2(false);
+      setView(0);
+      return;
+    } else {
+      setView(1);
+      setLoading2(false);
+      Toast({ title: res?.message, error: false });
+    }
   };
   const validateOtp = async () => {
-    setLoading(true);
-    const res = await postApi("otp/validate", {
-      email: values.email,
-      otp: otp?.join(""),
-    });
-    setView(2);
-    setLoading(false);
+    if (otp?.join("")?.length === 6) {
+      setLoading(true);
+      const res = await postApi("otp/validate", {
+        email: values.email,
+        otp: otp?.join(""),
+      });
+      if (res.message === "Otp validation is successful") {
+        Toast({ title: res.message, error: false });
+        setLoading(false);
+        setView(2);
+        return;
+      }
+      Toast({ title: res.response?.data?.message, error: true });
+      setLoading(false);
+    }
   };
   const resetPassword = async () => {
     const payload = {
@@ -107,5 +131,6 @@ export const useLoginQuery = () => {
     validateOtp,
     resetPassword,
     length,
+    loading2,
   };
 };

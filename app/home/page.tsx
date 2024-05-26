@@ -19,7 +19,7 @@ export default function page() {
       <Header2 />
       <section className="w-full sm:w-3/4 mx-auto p-5 sm:p-10">
         <Card>
-          <Countdown targetDate={"June 1, 2024 00:00:00"} />
+          <Countdown targetDate={"June 1, 2024 10:00:00"} />
           <article className="flex items-center justify-center space-y-4 flex-col p-10">
             <h2 className=" font-bold text-2xl text-center">
               WalkTheAisle With Us
@@ -51,14 +51,14 @@ export default function page() {
               </p>
             </div>
             {category === "address" ? (
-              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-full sm:w-2/3">
+              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-full lg:w-2/3">
                 <Location />
                 <p className="font-semibold">
                   L.J. Dosumu St, adjacent Fela shrine, Agidingbi, Ikeja
                 </p>
               </div>
             ) : (
-              <article className="flex flex-col sm:flex-row items-center justify-center">
+              <article className="flex flex-col lg:flex-row items-center justify-center">
                 <Card>
                   <div className="w-[300px] p-5">
                     <span className="flex items-center space-x-4">
