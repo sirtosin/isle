@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 export const useSignUpQuery = () => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
-  const [view, setView] = useState(1);
+  const [view, setView] = useState(0);
   const [loading2, setLoading2] = useState(false);
   const length = 6;
   const [modal, setModal] = useState(false);
