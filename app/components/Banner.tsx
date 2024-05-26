@@ -6,9 +6,11 @@ import { GooglePlayIcon, OpenIcon } from "../icons/Social";
 export default function Banner() {
   return (
     <div className=" w-full lg:py-10 h-[450px] sm:h-[500px] lg:px-20 bg-gradient-to-b from-[#2E002F] to-[#000]">
-      <section className="">
+      <section className="flex items-center justify-center h-[70vh] xl:h-max">
         <div className="flex flex-col space-y-5 text-white p-2 w-full items-center justify-center">
-          <h1 className="text-5xl text-center sm:text-8xl text-bold">Forever Begins Here!</h1>
+          <h1 className="text-5xl text-center sm:text-7xl lg:text-8xl text-bold">
+            Forever Begins Here!
+          </h1>
           <p className="w-3/4 sm:w-1/2 text-center text-xs sm:text-xl">
             Join Joseph and Zion's wedding, be a part of our union and share our
             joy with us. #AduraTemi’24

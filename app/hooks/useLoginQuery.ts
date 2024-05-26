@@ -1,22 +1,27 @@
-'use client'
-import { useMutation } from '@tanstack/react-query'
-import { Toast } from '../components/Toast'
-import { useAppDispatch } from '../redux/hook'
-import { login } from '../redux/userSlice'
-import { postApi } from '../services'
-import { useRouter } from 'next/navigation'
-import { useFormik } from 'formik'
+"use client";
+import { useMutation } from "@tanstack/react-query";
+import { Toast } from "../components/Toast";
+import { useAppDispatch } from "../redux/hook";
+import { login } from "../redux/userSlice";
+import { postApi, putApi } from "../services";
+import { useRouter } from "next/navigation";
+import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 // import { LoginType } from '../typings/login'
 // import { LoginSchema } from '../schema/login'
 
 export const useLoginQuery = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useRouter()
-
+  const dispatch = useAppDispatch();
+  const length = 6;
+  const [otp, setOtp] = useState(Array(length).fill(""));
+  const [view, setView] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const navigate = useRouter();
+  const [modal, setModal] = useState(false);
   const defaultValue = {
-    email: '',
-    password: ''
-  }
+    phone: "",
+    password: "",
+  };
   const {
     values,
     handleBlur,
@@ -25,59 +30,82 @@ export const useLoginQuery = () => {
     handleReset,
     errors,
     isSubmitting,
-    setSubmitting
+    setSubmitting,
   } = useFormik({
     initialValues: defaultValue,
-    validationSchema: '',
+    validationSchema: "",
     onSubmit: (values: any) => {
-      mutate()
-    }
-  })
+      submitHandler();
+    },
+  });
 
-  const submitHandler = (e: React.FormEvent) => {
-    e.preventDefault()
-    handleSubmit()
-  }
+  const submitHandler = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    mutate();
+  };
 
   const payload: any = {
-    email: values.email?.toLowerCase()?.trim(),
-    password: values.password?.trim()
-  }
+    phone: `234${values.phone?.toString()?.substring(0)}`,
+    password: values.password?.trim(),
+  };
 
   const { mutate } = useMutation({
-    mutationFn: () => postApi(`/Auth/Login`, payload),
+    mutationFn: () => postApi(`users/signin`, payload),
     onSuccess: (data) => {
-      data.responseCode !== 200
-        ? Toast({ title: data.responseMessage, error: true })
-        : Toast({ title: data.responseMessage, error: false })
-      if (data.responseData?.role) {
-        handleReset(payload)
-        const user: any = {
-          firstName: data.responseData?.firstName,
-          role: data.responseData?.role,
-          lastName: data.responseData?.lastName,
-          emailAddress: data.responseData?.emailAddress
-        }
-        data.responseData.role !== 'SuperAdmin'
-          ? navigate.push('/dashboard')
-          : navigate.push('/dashboard/add')
-
-        dispatch(login(user))
-        localStorage.setItem('auth', data.responseData?.token)
+      !data.success
+        ? Toast({ title: data.response?.data?.error, error: true })
+        : Toast({ title: "Login Successful", error: false });
+      handleReset(payload);
+      if (data.success) {
+        navigate.push("/home");
+        dispatch(login(data.profile));
+        localStorage.setItem("auth", data?.token);
       }
-      setSubmitting(false)
+      setSubmitting(false);
     },
     onError: (error) => {
-      console.log('there was an error', error)
-    }
-  })
-
+      console.log("there was an error", error);
+    },
+  });
+  const getOtp = async () => {
+    const res = await postApi("otp/generate", { email: values.email });
+  };
+  const validateOtp = async () => {
+    setLoading(true);
+    const res = await postApi("otp/validate", {
+      email: values.email,
+      otp: otp?.join(""),
+    });
+    setView(2);
+    setLoading(false);
+  };
+  const resetPassword = async () => {
+    const payload = {
+      code: otp?.join(""),
+      newPassword: values.password,
+    };
+    const res = await putApi(`users/reset-password`, payload);
+  };
+  useEffect(() => {
+    otp?.join("")?.length === 6 && validateOtp();
+  }, [otp?.join("")]);
   return {
-    submitHandler,
+    handleSubmit,
     values,
     handleBlur,
     handleChange,
     errors,
-    isSubmitting
-  }
-}
+    isSubmitting,
+    getOtp,
+    otp,
+    modal,
+    setModal,
+    setOtp,
+    view,
+    setView,
+    loading,
+    validateOtp,
+    resetPassword,
+    length,
+  };
+};

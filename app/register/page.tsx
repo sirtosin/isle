@@ -8,10 +8,17 @@ import { useSignUpQuery } from "../hooks/useSignUpQuery";
 import { ArrowLogin } from "../icons/Arrow";
 import { Toast } from "../components/Toast";
 import Image from "next/image";
-import { BackIcon2, DownloadIcon2, HurrayIcon, IsleIcon, QRIcon } from "../icons/Social";
+import {
+  BackIcon2,
+  DownloadIcon2,
+  HurrayIcon,
+  IsleIcon,
+  QRIcon,
+} from "../icons/Social";
 import ModalCard from "../components/modal/Modal";
 import Card from "../components/Card";
 import Link from "next/link";
+import { useAppSelector } from "../redux/hook";
 
 export default function page() {
   const {
@@ -22,12 +29,20 @@ export default function page() {
     handleBlur,
     handleChange,
     isSubmitting,
+    tables,
+    setView,
+    view,
+    validateOtp,
+    loading,
+    setOtp,
+    otp,
+    length,
+    setModal,
+    modal,tableId
   } = useSignUpQuery();
-  const length = 6;
 
-  const [otp, setOtp] = useState(Array(length).fill(""));
   const inputRefs: any = useRef([]);
-  const [modal, setModal] = useState(false);
+  const user = useAppSelector((state) => state.user.user);
   const handleModal = () => setModal((prev) => !prev);
   const handleInputChange = (value: string, index: number) => {
     const updatedOtp = [...otp];
@@ -52,13 +67,12 @@ export default function page() {
       inputRefs.current[index - 1]?.focus();
     }
   };
-  useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, []);
-  const [view, setView] = useState(0);
+ useEffect(() => {
+   view === 2 && inputRefs?.current[0]?.focus();
+ }, [view]);
   const handleOtp = (e: any) => {
     e.preventDefault();
-    if (!values.code || !values.email || !values.phone) {
+    if (!values.name || !values.email || !values.phone || !values.table) {
       Toast({ title: "Fill All Fields", error: true });
       return;
     }
@@ -69,7 +83,7 @@ export default function page() {
     <div className="flex overflow-hidden h-screen">
       {modal && (
         <ModalCard setOpen={handleModal} open={modal}>
-          <Hurray />
+          <Hurray user={user} tableId={tableId} />
         </ModalCard>
       )}
       <div className="hidden lg:flex lg:w-1/2">
@@ -128,28 +142,22 @@ export default function page() {
               {errors.email ? (
                 <b className="text-xs text-red-700 italic">{errors.email}</b>
               ) : null}
-              <Input
-                type="text"
-                label="invitation code:"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.code}
-                name="code"
-              />
-              {errors.code ? (
-                <b className="text-xs text-red-700 italic">{errors.code}</b>
-              ) : null}
+              <Input type="text" label="invitation code:" value="Itsforever" />
               <select
                 className={`p-2 outline-none rounded w-full ${
                   true
                     ? "border-[1px] border-[#810A82] text-[#979797] bg-[#EEF6FF]"
                     : "border-[1px] border-gray-300 text-sm"
                 }`}
-                name=""
-                id=""
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.table}
+                name="table"
               >
                 <option value="">select table</option>
-                <option value="groom">groom</option>
+                {tables.map((item) => (
+                  <option value={item?._id}>{item?.description}</option>
+                ))}
               </select>
               <Button
                 loading={false}
@@ -176,7 +184,7 @@ export default function page() {
               <span>
                 <h2 className="text-3xl font-bold">Verify Your Account</h2>
                 <p className="text-[#656565]">
-                  Please, enter the OTP we just sent to “{values.email}”
+                  Enter the 6 digit OTP sent to your phone and email
                 </p>
               </span>
               <h2 className="font-bold">OTP:</h2>
@@ -196,12 +204,15 @@ export default function page() {
                   />
                 ))}
               </div>
-              <small className="!mt-0  ml-auto cursor-pointer font-semibold">
+              <small
+                onClick={handleOtp}
+                className="!mt-0  ml-auto cursor-pointer font-semibold"
+              >
                 Don’t receive OTP? Resend OTP
               </small>
               <Button
-                loading={isSubmitting}
-                onClick={() => setView(2)}
+                loading={loading}
+                onClick={validateOtp}
                 label="Verify"
                 styles="bg-[#810A82] w-3/4"
               />
@@ -241,7 +252,7 @@ export default function page() {
                   type="password"
                   label="confirm Password"
                   name="cpassword"
-                  value={values.name}
+                  value={values.cpassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -267,8 +278,8 @@ export default function page() {
   );
 }
 
-export const Hurray = () => (
-  <div >
+export const Hurray = ({user,tableId}:any) => (
+  <div>
     <span className="flex items-center justify-center">
       <HurrayIcon />
     </span>
@@ -276,26 +287,30 @@ export const Hurray = () => (
       <h2 className="font-bold text-2xl">Congratulations! 🎉</h2>
       <p>You're now part of our wedding celebration</p>
     </span>
-    <article className="flex">
+    <article className="flex flex-col sm:flex-row items-center justify-center">
       <Card>
-        <div className="w-[300px] p-10">
-          <span className="flex items-center space-x-5">
+        <div className="w-[300px] p-5">
+          <span className="flex items-center space-x-4">
             <h2 className="font-semibold text-[#545454]">Name: </h2>
-            <p className="text-sm text-[#0D141C]">Adeyemi Remi</p>
+            <p className="text-sm text-[#0D141C]">{user?.name}</p>
           </span>
           <span className="flex items-center space-x-5">
-            <h2 className="font-semibold text-[#545454]">Code: </h2>
-            <p className="text-sm text-[#0D141C]">Adey 321</p>
+            <h2 className="font-semibold text-[#545454] text-wrap ">Code: </h2>
+            <p className="text-sm text-[#0D141C] w-[300px]">
+              {user?.accessCode??user?.inviteCode}
+            </p>
           </span>
           <span className="flex items-center space-x-5">
             <h2 className="font-semibold text-[#545454]">Table: </h2>
-            <p className="bg-[#810A82] w-max p-1 rounded text-white">12 </p>
+            <p className="bg-[#810A82] w-max p-1 rounded text-white">
+              {tableId}
+            </p>
           </span>
         </div>
       </Card>
       <Card>
         <div className="flex items-center justify-center p-5">
-          <QRIcon />
+          <img src={user?.qrCodeUrl} className="size-32 rounded" alt="qrcode" />
         </div>
       </Card>
     </article>
@@ -304,7 +319,9 @@ export const Hurray = () => (
         <DownloadIcon2 />
       </div>
       <div className="cursor-pointer w-2/3 bg-[#810A82] py-2 px-4 items-center justify-center flex rounded">
-        <Link href='/login' className="mx-auto  text-white">Log in Now</Link>
+        <Link href="/login" className="mx-auto  text-white">
+          Log in Now
+        </Link>
       </div>
     </article>
   </div>

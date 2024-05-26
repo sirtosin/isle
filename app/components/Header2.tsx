@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import ArrowDown from "../icons/ArrowDown";
 import Account from "./Account";
@@ -18,17 +18,19 @@ import {
   UserIcon,
 } from "../icons/Social";
 import Link from "next/link";
-import { Close } from "../icons/Close";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAppSelector } from "../redux/hook";
+
 export default function Header2() {
-  const [modalAccount, setModalAccount] = useState(false);
-  const [account, setAccount] = useState(true);
+  const user = useAppSelector((state) => state.user.user);
+  const navigate = useRouter();
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((prev) => !prev);
-  const handleModal = () => setModalAccount((prev) => !prev);
-  const handleLogout = () => setAccount((prev) => !prev);
   const pathname = usePathname();
   const activePath = pathname?.replace("/", "");
+  useEffect(() => {
+    !user?.name && navigate.push("/login");
+  }, [user?.name]);
   return (
     <header className="sticky top-0 left-0 z-50 bg-white border-b-[1px] border-white flex items-center justify-between lg:justify-around px-10">
       <div>
@@ -84,8 +86,9 @@ export default function Header2() {
             : "cursor-pointer hidden text-[#AFAFAF]  lg:flex space-x-2 items-center"
         }
       >
-        <ProfileIcon2 />
-        <p>Account</p>
+        {" "}
+        <UserIcon color={activePath === "profile" ? "#810A82" : "#CBCBCB"} />
+        <p>{user?.name}</p>
       </Link>
       {/* mobile */}
       <nav className="flex items-center justify-between h-[80px] lg:hidden px-4">
@@ -150,8 +153,11 @@ export default function Header2() {
                     : "cursor-pointer text-[#AFAFAF]  flex space-x-2 items-center"
                 }
               >
-                <ProfileIcon2 />
-                <p>Account</p>
+                <UserIcon
+                  color={activePath === "profile" ? "#810A82" : "#CBCBCB"}
+                />
+
+                <p>{user?.name}</p>
               </Link>
             </div>
           )}

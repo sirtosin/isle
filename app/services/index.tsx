@@ -53,6 +53,7 @@ export const postApi = async (url: string, payload: any) => {
         return res.data
       } else {
         console.log('err')
+        return res.data;
       }
     })
     .catch((err) => {

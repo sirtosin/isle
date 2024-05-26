@@ -38,7 +38,7 @@ export const useForgotQuery = () => {
   }
 
   const { mutate } = useMutation({
-    mutationFn: () => putApi(`/Auth/ForgotPassword`, payload),
+    mutationFn: () => putApi(`users/reset-password`, payload),
     onSuccess: (data) => {
       data.responseCode !== 200
         ? Toast({ title: data.responseMessage, error: true })

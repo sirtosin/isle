@@ -8,10 +8,17 @@ import { useSignUpQuery } from "../hooks/useSignUpQuery";
 import { ArrowLogin } from "../icons/Arrow";
 import { Toast } from "../components/Toast";
 import Image from "next/image";
-import { BackIcon2, DownloadIcon2, HurrayIcon, IsleIcon, QRIcon } from "../icons/Social";
+import {
+  BackIcon2,
+  DownloadIcon2,
+  HurrayIcon,
+  IsleIcon,
+  QRIcon,
+} from "../icons/Social";
 import ModalCard from "../components/modal/Modal";
 import Card from "../components/Card";
 import Link from "next/link";
+import { useLoginQuery } from "../hooks/useLoginQuery";
 
 export default function page() {
   const {
@@ -22,12 +29,17 @@ export default function page() {
     handleBlur,
     handleChange,
     isSubmitting,
-  } = useSignUpQuery();
-  const length = 6;
-
-  const [otp, setOtp] = useState(Array(length).fill(""));
+    otp,
+    modal,
+    setModal,
+    setOtp,
+    view,
+    setView,
+    loading,
+    validateOtp,
+    length,
+  } = useLoginQuery();
   const inputRefs: any = useRef([]);
-  const [modal, setModal] = useState(false);
   const handleModal = () => setModal((prev) => !prev);
   const handleInputChange = (value: string, index: number) => {
     const updatedOtp = [...otp];
@@ -38,7 +50,6 @@ export default function page() {
       inputRefs.current[index + 1]?.focus();
     }
   };
-
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>,
     index: number
@@ -53,12 +64,11 @@ export default function page() {
     }
   };
   useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, []);
-  const [view, setView] = useState(0);
+    view === 2 && inputRefs.current[0]?.focus();
+  }, [view]);
   const handleOtp = (e: any) => {
     e.preventDefault();
-    if (!values.code || !values.email || !values.phone) {
+    if (!values.phone) {
       Toast({ title: "Fill All Fields", error: true });
       return;
     }
@@ -120,14 +130,14 @@ export default function page() {
                 Forgot Password?
               </small>
               <Button
-                loading={false}
+                loading={isSubmitting}
                 label="Continue"
-                onClick={handleOtp}
+                onClick={handleSubmit}
                 styles="bg-[#810A82]  w-full"
               />
               <Link href="/register" className="text-center">
                 Don’t have an account?
-                <b className="text-[#810A82]">Register</b>{" "}
+                <b className="text-[#810A82] ml-2">Register</b>{" "}
               </Link>
             </form>
           </>
@@ -164,12 +174,15 @@ export default function page() {
                   />
                 ))}
               </div>
-              <small className="!mt-0  ml-auto cursor-pointer font-semibold">
+              <small
+                onClick={handleOtp}
+                className="!mt-0  ml-auto cursor-pointer font-semibold"
+              >
                 Don’t receive OTP? Resend OTP
               </small>
               <Button
-                loading={isSubmitting}
-                onClick={() => setView(2)}
+                loading={loading}
+                onClick={validateOtp}
                 label="Verify"
                 styles="bg-[#810A82] w-3/4"
               />
@@ -262,8 +275,8 @@ export default function page() {
 
                 <Button
                   icon={<ArrowLogin />}
-                  loading={isSubmitting}
-                  onClick={() => setView(1)}
+                  loading={false}
+                  onClick={handleOtp}
                   label="continue"
                   styles="bg-[#810A82] w-full  my-5"
                 />
@@ -290,9 +303,7 @@ export const Hurray = () => (
     </span>
     <span className="my-5 flex flex-col space-y-1 items-center justify-center">
       <h2 className="font-bold text-2xl">Congratulations! 🎉</h2>
-      <p className="text-center ">
-        Your password reset is complete.
-      </p>
+      <p className="text-center ">Your password reset is complete.</p>
     </span>
     <div className=" cursor-pointer w-full bg-[#810A82] py-2 px-4 items-center justify-center flex rounded">
       <p className="mx-auto  text-white">Log in Now</p>

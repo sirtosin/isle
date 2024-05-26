@@ -6,7 +6,7 @@ import { CopyIcon, LineIcon } from '../icons/Location';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function page() {
-  const [value, setValue] = useState("00771234");
+  const [value, setValue] = useState("2017164294");
   const [copied, setCopied] = useState(false);
   return (
     <div>
@@ -22,7 +22,7 @@ export default function page() {
               the couple's First Bank account.
             </p>
             <article className="flex items-center justify-center space-y-5 flex-col bg-[#FFE4FF] py-5 px-10 w-3/4 sm:w-1/2">
-              <h2 className="font-bold">First Bank</h2>
+              <h2 className="font-bold">Kuda Bank</h2>
               <span className="flex items-center space-x-3">
                 <p className="text-[#810A82] font-bold text-2xl">{value}</p>
                 {copied ? (
@@ -35,7 +35,7 @@ export default function page() {
                   </CopyToClipboard>
                 )}
               </span>
-              <p className="font-bold">Kelvin Tosin</p>
+              <p className="font-bold">Zion Ajibodu</p>
             </article>
             <article className="my-10 p-5">
               <h2 className="text-[#4C4D50] font-bold text-xl">

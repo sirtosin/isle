@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import { BackIcon2 } from "../icons/Social";
 import Input from "../components/Input";
 import { useSignUpQuery } from "../hooks/useSignUpQuery";
+import { useAppSelector } from "../redux/hook";
 
 export default function page() {
   const [view, setView] = useState(0);
@@ -21,10 +22,12 @@ export default function page() {
     handleBlur,
     handleChange,
     isSubmitting,
+    handleLogout,
   } = useSignUpQuery();
   const hiddenFileInput = useRef<null | any>(null);
   const [file, setFile] = useState<null | any>(null);
   const [imageUrl, setImageUrl] = useState("");
+  const user = useAppSelector((state) => state.user.user);
 
   const handleClick = (event: React.FormEvent) => {
     hiddenFileInput?.current.click();
@@ -43,6 +46,7 @@ export default function page() {
       reader.readAsDataURL(file);
     }
   };
+
 
   return (
     <div>
@@ -63,11 +67,7 @@ export default function page() {
                       alt=""
                     />
                   ) : (
-                    <Image
-                      src={bg}
-                      className="w-full"
-                      alt=""
-                    />
+                    <Image src={bg} className="w-full" alt="" />
                   )}
                   <p className="absolute -right-2 top-5">
                     <CameraIcon />
@@ -97,7 +97,13 @@ export default function page() {
                       <div className="w-1 bg-[#810A82] p-1 rounded-full" />
                       <div className="w-[120px] sm:w-[200px] h-1  bg-[#810A82]" />
                       <div className="w-1 bg-[#810A82] p-1 rounded-full" />
-                      <div className="w-[120px] sm:w-[200px] h-1  bg-[#D5C6D5]" />
+                      <div
+                        className={
+                          user?.isCheckedIn
+                            ? "bg-[#810A82] w-[120px] sm:w-[200px] h-1 "
+                            : "w-[120px] sm:w-[200px] h-1  bg-[#D5C6D5]"
+                        }
+                      />
                       <div className="w-1 bg-[#810A82] p-1 rounded-full" />
                     </aside>
                     <aside className="flex items-center my-3 justify-between w-full">
@@ -110,15 +116,15 @@ export default function page() {
                 <div className="flex flex-col space-y-3">
                   <span className="flex flex-col ">
                     <h2 className="text-[#ACACAC] text-sm">Name:</h2>
-                    <p className="font-bold">Rapheal Simon</p>
+                    <p className="font-bold">{user?.name}</p>
                   </span>
                   <span className="flex flex-col ">
                     <h2 className="text-[#ACACAC] text-sm">Phone Number:</h2>
-                    <p className="font-bold">Rapheal Simon</p>
+                    <p className="font-bold">{user?.phone}</p>
                   </span>
                   <span className="flex flex-col ">
                     <h2 className="text-[#ACACAC] text-sm">Email:</h2>
-                    <p className="font-bold">Rapheal Simon</p>
+                    <p className="font-bold">{user?.email}</p>
                   </span>
                 </div>
                 <div
@@ -142,7 +148,10 @@ export default function page() {
                     <ArrowRight />
                   </p>
                 </div>
-                <button className="bg-[#FF0000] w-3/4 rounded my-4 px-5 py-2 items-center justify-center text-white mx-auto flex">
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#FF0000] w-3/4 rounded my-4 px-5 py-2 items-center justify-center text-white mx-auto flex"
+                >
                   logout
                 </button>
               </article>
