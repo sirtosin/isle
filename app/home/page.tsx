@@ -96,7 +96,6 @@ export default function page() {
                   <a
                     className="text-center capitalize font-semibold bg-[#810A82] text-white rounded p-2 w-3/4 "
                     href={user?.qrCodeUrl}
-                    
                     download={user?.qrCodeUrl}
                   >
                     download ticket

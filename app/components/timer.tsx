@@ -43,8 +43,12 @@ const Countdown = ({ targetDate }: any) => {
 
   return (
     <div>
+      <h2 className="mt-6 text-center font-bold text-xl">
+        Countdown to the wedding
+      </h2>
+
       {timerComponents.length ? (
-        <article className="flex items-center sm:space-x-5 flex-wrap justify-center p-10">
+        <article className="flex items-center sm:space-x-5 flex-wrap justify-center px-10">
           <div className="flex items-center justify-center flex-col">
             <h2 className="shadow-md rounded py-4 px-8 size-20 m-4 flex text-[#515151] font-semibold text-2xl items-center justify-center ">
               {timeLeft?.days}

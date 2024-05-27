@@ -356,7 +356,13 @@ export const Hurray = ({ user }: any) => (
     </article>
     <article className="flex items-center w-full justify-between ">
       <div className="cursor-pointer border-[1px] w-max border-[#810A82] rounded px-10 items-center justify-center flex py-2 ">
-        <DownloadIcon2 />
+        <a
+          className=" "
+          href={user?.qrCodeUrl}
+          download={user?.qrCodeUrl}
+        >
+          <DownloadIcon2 />
+        </a>
       </div>
       <div className="cursor-pointer w-2/3 bg-[#810A82] py-2 px-4 items-center justify-center flex rounded">
         <Link href="/login" className="mx-auto  text-white">
