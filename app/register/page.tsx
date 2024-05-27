@@ -87,7 +87,7 @@ export default function page() {
       Toast({ title: "Fill All Fields", error: true });
       return;
     }
-    if (code !== "Itsforever") {
+    if (code?.trim() !== "Itsforever") {
       Toast({ title: "invalid invitation code", error: true });
       return;
     }

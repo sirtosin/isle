@@ -3,26 +3,27 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-[#2E002F]/90 text-white py-10  ">
-      <Link
-        href="/"
-        className="text-xl font-bold mb-10 text-white px-8 sm:px-16 cursor-pointer italic"
-      >
-        Walk The Isle{" "}
-      </Link>
-      <div className="flex space-y-4 flex-col px-8 sm:px-16 mt-10">
-        <Link href="/terms" className="text-[#77878F]">
+    <div className="w-full bg-[#2E002F] text-white p-5 sm:p-10  "> 
+      <span className="flex flex-col">
+        <h2 className="text-3xl text-bold text-white cursor-pointer ">
+          Walk The Isle{" "}
+        </h2>
+        <p>Absolutely, I'm ready to collaborate with you. Let's get started!</p>
+      </span>
+      <hr className="bg-white my-5" />
+
+      <div className="flex space-y-4 sm:items-center justify-start flex-col sm:px-16 sm:flex-row sm:justify-between">
+        <Link href="/terms" className="">
           Terms and Condition
         </Link>
-        <Link href="/privacy" className="text-[#77878F]">
+        <Link href="/privacy" className="">
           Privacy Policy
         </Link>
-        <Link href="/delete" className="text-[#77878F]">
+        <Link href="/delete" className="">
           Delete Account
         </Link>
       </div>
-      <hr className="bg-[#303639] my-5" />
-      <p className="text-center my-5 text-[#ADB7BC]">
+      <p className="text-center my-5">
         &copy; {new Date().getFullYear()} Walk The Isle. All rights reserved
       </p>
     </div>
