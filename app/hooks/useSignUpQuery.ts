@@ -1,7 +1,7 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
 import { Toast } from "../components/Toast";
-import { useAppDispatch, useAppSelector } from "../redux/hook";
+import { useAppDispatch } from "../redux/hook";
 import { login, logout } from "../redux/userSlice";
 import { getApi, postApi } from "../services";
 import { useRouter } from "next/navigation";
@@ -11,17 +11,18 @@ import { useEffect, useState } from "react";
 // import { LoginSchema } from '../schema/login'
 
 export const useSignUpQuery = () => {
-  const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const [view, setView] = useState(0);
   const [loading2, setLoading2] = useState(false);
   const length = 6;
   const [modal, setModal] = useState(false);
+  const [code, setCode] = useState('');
   const [otp, setOtp] = useState(Array(length).fill(""));
   const navigate = useRouter();
   const [loading, setLoading] = useState(false);
   const [tables, setTables] = useState([]);
-  const [tableId, setTableId] = useState({});
+  const [seconds, setSeconds] = useState(90); // 1:30 minutes in second9
+
   const defaultValue = {
     email: "",
     password: "",
@@ -65,11 +66,11 @@ export const useSignUpQuery = () => {
     mutationFn: () => postApi(`users`, payload),
     onSuccess: (data) => {
       //  Toast({ title: data.responseMessage, error: true });
-      console.log("data", data);
+      console.log("data", data.data);
       handleReset(payload);
       setModal(true);
       dispatch(login(data?.data));
-      localStorage.setItem("auth", data?.data.token);
+      localStorage.setItem("auth", data?.data?.token);
 
       setSubmitting(false);
     },
@@ -80,7 +81,7 @@ export const useSignUpQuery = () => {
 
   const getOtp = async () => {
     setLoading2(true);
-
+setSeconds(90)
     const payload = {
       email: values.email,
       phone: `234${values.phone?.toString()}`,
@@ -113,16 +114,10 @@ export const useSignUpQuery = () => {
       Toast({ title: res.response?.data?.message, error: true });
       setLoading(false);
     }
-
   };
   const getTables = async () => {
     const res = await getApi("tables");
     setTables(res);
-  };
-  const getTableID = async () => {
-    const res = await getApi("tables");
-    const findTable = res.filter((item: any) => item._id === user?.table);
-    setTableId(findTable[0]?.alias);
   };
 
   const handleLogout = () => {
@@ -132,9 +127,7 @@ export const useSignUpQuery = () => {
   useEffect(() => {
     getTables();
   }, []);
-  useEffect(() => {
-    user?.table && getTableID();
-  }, [user?.table]);
+
   useEffect(() => {
     otp?.join("")?.length === 6 && validateOtp();
   }, [otp?.join("")]);
@@ -156,8 +149,11 @@ export const useSignUpQuery = () => {
     modal,
     otp,
     length,
-    tableId,
     handleLogout,
     loading2,
+    setSeconds,
+    seconds,
+    code,
+    setCode,
   };
 };

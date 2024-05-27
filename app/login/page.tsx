@@ -39,6 +39,8 @@ export default function page() {
     validateOtp,
     length,
     loading2,
+    setSeconds,
+    seconds,
   } = useLoginQuery();
   const inputRefs: any = useRef([]);
   const handleModal = () => setModal((prev) => !prev);
@@ -75,7 +77,6 @@ export default function page() {
     }
     getOtp();
   };
-  const [seconds, setSeconds] = useState(90); // 1:30 minutes in second9
   useEffect(() => {
     if (view === 1) {
       const interval = setInterval(() => {

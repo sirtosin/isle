@@ -38,7 +38,12 @@ export default function page() {
     otp,
     length,
     setModal,
-    modal,tableId,loading2
+    modal,
+    loading2,
+    setSeconds,
+    seconds,
+    code,
+    setCode,
   } = useSignUpQuery();
 
   const inputRefs: any = useRef([]);
@@ -67,19 +72,28 @@ export default function page() {
       inputRefs.current[index - 1]?.focus();
     }
   };
- useEffect(() => {
-   view === 1 && inputRefs?.current[0]?.focus();
- }, [view]);
+  useEffect(() => {
+    view === 1 && inputRefs?.current[0]?.focus();
+  }, [view]);
   const handleOtp = (e: any) => {
     e.preventDefault();
-    if (!values.name || !values.email || !values.phone || !values.table) {
+    if (
+      !values.name ||
+      !values.email ||
+      !values.phone ||
+      !values.table ||
+      !code
+    ) {
       Toast({ title: "Fill All Fields", error: true });
+      return;
+    }
+    if (code !== "Itsforever") {
+      Toast({ title: "invalid invitation code", error: true });
       return;
     }
     getOtp();
   };
-    const [seconds, setSeconds] = useState(90); // 1:30 minutes in second9
-    useEffect(() => {
+  useEffect(() => {
     if (view === 1) {
       const interval = setInterval(() => {
         if (seconds > 0) {
@@ -89,17 +103,17 @@ export default function page() {
 
       return () => clearInterval(interval);
     }
-    }, [seconds,view]);
-    const formatTime = (time:any) => {
-      const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
-      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-    };
+  }, [seconds, view]);
+  const formatTime = (time: any) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
   return (
     <div className="flex overflow-hidden h-screen">
       {modal && (
         <ModalCard setOpen={handleModal} open={modal}>
-          <Hurray user={user} tableId={tableId} />
+          <Hurray user={user} />
         </ModalCard>
       )}
       <div className="hidden lg:flex lg:w-1/2">
@@ -158,12 +172,18 @@ export default function page() {
               {errors.email ? (
                 <b className="text-xs text-red-700 italic">{errors.email}</b>
               ) : null}
-              <Input type="text" label="invitation code:" value="Itsforever" />
+              <Input
+                type="text"
+                label="invitation code:"
+                placeholder="Itsforever"
+                onChange={(e) => setCode(e.target.value)}
+                value={code}
+              />
               <select
                 className={`p-2 outline-none rounded w-full ${
-                  true
-                    ? "border-[1px] border-[#810A82] text-[#979797] bg-[#EEF6FF]"
-                    : "border-[1px] border-gray-300 text-sm"
+                  values.table
+                    ? "border-[1px] border-[#810A82] "
+                    : "border-[1px] border-gray-300 text-sm text-[#979797] bg-[#EEF6FF]"
                 }`}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -171,8 +191,8 @@ export default function page() {
                 name="table"
               >
                 <option value="">select table</option>
-                {tables.map((item) => (
-                  <option value={item?.alias}>{item?.description}</option>
+                {tables.map((item: any) => (
+                  <option value={item?.alias}>{item?.name}</option>
                 ))}
               </select>
               <Button
@@ -223,7 +243,7 @@ export default function page() {
               <aside className="w-full flex items-center justify-between">
                 <p>{formatTime(seconds)}</p>
                 <small
-                  onClick={seconds !== 0 ?() => {}:handleOtp}
+                  onClick={seconds !== 0 ? () => {} : handleOtp}
                   className="!mt-0  ml-auto cursor-pointer font-semibold"
                 >
                   Don’t receive OTP? Resend OTP
@@ -298,7 +318,7 @@ export default function page() {
   );
 }
 
-export const Hurray = ({user,tableId}:any) => (
+export const Hurray = ({ user }: any) => (
   <div>
     <span className="flex items-center justify-center">
       <HurrayIcon />
@@ -317,13 +337,13 @@ export const Hurray = ({user,tableId}:any) => (
           <span className="flex items-center space-x-5">
             <h2 className="font-semibold text-[#545454] text-wrap ">Code: </h2>
             <p className="text-sm text-[#0D141C] w-[300px]">
-              {user?.accessCode??user?.inviteCode}
+              {user?.inviteCode ?? user?.accessCode ?? ""}
             </p>
           </span>
           <span className="flex items-center space-x-5">
             <h2 className="font-semibold text-[#545454]">Table: </h2>
             <p className="bg-[#810A82] w-max p-1 rounded text-white">
-              {tableId}
+              {user?.tableId}
             </p>
           </span>
         </div>

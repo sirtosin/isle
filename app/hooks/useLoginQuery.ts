@@ -18,6 +18,7 @@ export const useLoginQuery = () => {
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const navigate = useRouter();
+  const [seconds, setSeconds] = useState(90); // 1:30 minutes in second9
   const [modal, setModal] = useState(false);
   const defaultValue = {
     phone: "",
@@ -69,6 +70,7 @@ export const useLoginQuery = () => {
     },
   });
   const getOtp = async () => {
+    setSeconds(90)
     setLoading2(true);
     const payload = {
       email: values.email,
@@ -132,5 +134,7 @@ export const useLoginQuery = () => {
     resetPassword,
     length,
     loading2,
+    setSeconds,
+    seconds,
   };
 };

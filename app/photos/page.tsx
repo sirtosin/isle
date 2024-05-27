@@ -13,8 +13,8 @@ export default function page() {
               Photo-Sharing
             </h2>
           </div>
-          <div className="flex items-center flex-wrap justify-center sm:justify-start">
-            {Array(10)
+          <div className="flex items-center flex-wrap justify-center sm:justify-center my-10">
+            {/* {Array(10)
               .fill("")
               .map((i) => (
                 <img
@@ -23,7 +23,10 @@ export default function page() {
                   src="https://t3.ftcdn.net/jpg/04/84/87/34/360_F_484873483_hg1ofIdXbMha5lKEDG3hJBrwKh1oikTq.jpg"
                   alt=""
                 />
-              ))}
+              ))} */}
+              <p className="text-center font-semibold">
+                No Photos Found
+              </p>
           </div>
         </Card>
       </section>

@@ -9,6 +9,7 @@ import { QRIcon } from "../icons/Social";
 import Countdown from "../components/timer";
 import { useAppSelector } from "../redux/hook";
 import { useSignUpQuery } from "../hooks/useSignUpQuery";
+import SimpleMap from "../components/Map";
 
 export default function page() {
   const [category, setCategory] = useState("address");
@@ -51,46 +52,58 @@ export default function page() {
               </p>
             </div>
             {category === "address" ? (
-              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-full lg:w-2/3">
-                <Location />
-                <p className="font-semibold">
-                  L.J. Dosumu St, adjacent Fela shrine, Agidingbi, Ikeja
-                </p>
+              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-3/4">
+                {/* <Location /> */}
+                <SimpleMap />
               </div>
             ) : (
-              <article className="flex flex-col lg:flex-row items-center justify-center">
-                <Card>
-                  <div className="w-[300px] p-5">
-                    <span className="flex items-center space-x-4">
-                      <h2 className="font-semibold text-[#545454]">Name: </h2>
-                      <p className="text-sm text-[#0D141C]">{user?.name}</p>
-                    </span>
-                    <span className="flex items-center space-x-5">
-                      <h2 className="font-semibold text-[#545454] text-wrap ">
-                        Code:{" "}
-                      </h2>
-                      <p className="text-sm text-[#0D141C] w-[300px]">
-                        {user?.accessCode}
-                      </p>
-                    </span>
-                    <span className="flex items-center space-x-5">
-                      <h2 className="font-semibold text-[#545454]">Table: </h2>
-                      <p className="bg-[#810A82] w-max p-1 rounded text-white">
-                        {tableId}
-                      </p>
-                    </span>
-                  </div>
-                </Card>
-                <Card>
-                  <div className="flex items-center justify-center p-5">
-                    <img
-                      src={user?.qrCodeUrl}
-                      className="size-32 rounded"
-                      alt="qrcode"
-                    />
-                  </div>
-                </Card>
-              </article>
+              <>
+                <article className="flex flex-col lg:flex-row items-center justify-center">
+                  <Card>
+                    <div className="w-[300px] p-5">
+                      <span className="flex items-center space-x-4">
+                        <h2 className="font-semibold text-[#545454]">Name: </h2>
+                        <p className="text-sm text-[#0D141C]">{user?.name}</p>
+                      </span>
+                      <span className="flex items-center space-x-5">
+                        <h2 className="font-semibold text-[#545454] text-wrap ">
+                          Code:{" "}
+                        </h2>
+                        <p className="text-sm text-[#0D141C] w-[300px]">
+                          {user?.accessCode}
+                        </p>
+                      </span>
+                      <span className="flex items-center space-x-5">
+                        <h2 className="font-semibold text-[#545454]">
+                          Table:{" "}
+                        </h2>
+                        <p className="bg-[#810A82] w-max p-1 rounded text-white">
+                          {tableId}
+                        </p>
+                      </span>
+                    </div>
+                  </Card>
+                  <Card>
+                    <div className="flex items-center justify-center p-5">
+                      <img
+                        src={user?.qrCodeUrl}
+                        className="size-32 rounded"
+                        alt="qrcode"
+                      />
+                    </div>
+                  </Card>
+                </article>
+                <div className="flex items-center justify-center">
+                  <a
+                    className="text-center capitalize font-semibold bg-[#810A82] text-white rounded p-2 w-3/4 "
+                    href={user?.qrCodeUrl}
+                    
+                    download={user?.qrCodeUrl}
+                  >
+                    download ticket
+                  </a>
+                </div>
+              </>
             )}{" "}
           </article>
         </Card>
