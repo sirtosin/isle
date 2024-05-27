@@ -354,7 +354,7 @@ export const Hurray = ({ user }: any) => (
         </div>
       </Card>
     </article>
-    <article className="flex items-center w-full justify-between ">
+    <article className="mb-32 flex items-center w-full justify-between ">
       <div className="cursor-pointer border-[1px] w-max border-[#810A82] rounded px-10 items-center justify-center flex py-2 ">
         <a
           className=" "
