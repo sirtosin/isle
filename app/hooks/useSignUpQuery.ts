@@ -15,7 +15,7 @@ export const useSignUpQuery = () => {
   const [view, setView] = useState(0);
   const [loading2, setLoading2] = useState(false);
   const length = 6;
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [code, setCode] = useState('');
   const [otp, setOtp] = useState(Array(length).fill(""));
   const navigate = useRouter();
