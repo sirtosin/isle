@@ -14,7 +14,6 @@ import SimpleMap from "../components/Map";
 export default function page() {
   const [category, setCategory] = useState("address");
   const user = useAppSelector((state) => state.user.user);
-  const { tableId } = useSignUpQuery();
   return (
     <div>
       <Header2 />
@@ -78,7 +77,7 @@ export default function page() {
                           Table:{" "}
                         </h2>
                         <p className="bg-[#810A82] w-max p-1 rounded text-white">
-                          {tableId}
+                          {user?.table}
                         </p>
                       </span>
                     </div>

@@ -1,7 +1,13 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
+import { Location } from "../icons/Location";
 
-const AnyReactComponent = ({ text }:any) => <div>{text}</div>;
+const AnyReactComponent = ({ text }: any) => (
+  <div>
+    <Location />
+    <p className="text-xs font-bold">{text}</p>
+  </div>
+);
 
 export default function SimpleMap() {
   const defaultProps = {
@@ -20,7 +26,7 @@ export default function SimpleMap() {
         <AnyReactComponent
           lat={6.625108316868475}
           lng={3.3571091031176414}
-          text="L.J. Dosumu St, adjacent Fela shrine, Agidingbi, Ikeja"
+          text="L.J. Dosumu St"
         />
       </GoogleMapReact>
     </div>
