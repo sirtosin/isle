@@ -63,9 +63,9 @@ export const useLoginQuery = () => {
         handleReset(payload);
         if (data?.profile?.role === "admin") {
           navigate.push("/checkin");
-          return;
+        } else {
+          navigate.push("/home");
         }
-        navigate.push("/home");
       }
       setSubmitting(false);
     },
