@@ -1,11 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import ArrowDown from "../icons/ArrowDown";
-import Account from "./Account";
 import {
-  EditIcon,
-  EmailIcon,
   GiftIcon2,
   GiftIcon22,
   HomeIcon2,
@@ -20,8 +16,9 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector } from "../redux/hook";
+import { SearchField } from "./Search";
 
-export default function Header2() {
+export default function Header2({ deferedValue, setInputText }: any) {
   const user = useAppSelector((state) => state.user.user);
   const navigate = useRouter();
   const [toggle, setToggle] = useState(false);
@@ -38,45 +35,56 @@ export default function Header2() {
           <IsleIcon />
         </Link>
       </div>
-      <nav className="hidden lg:flex items-center justify-between h-[80px] shadow-sm px-20">
-        <div className="flex space-x-10 items-center">
-          <Link
-            href="/home"
-            className={
-              activePath === "home"
-                ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
-                : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
-            }
-          >
-            {activePath === "home" ? <HomeIcon2 /> : <HomeIcon22 />}
-            <p>Home</p>
-          </Link>
-
-          <Link
-            href="/photos"
-            className={
-              activePath === "photos"
-                ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
-                : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
-            }
-          >
-            {activePath === "photos" ? <PhotoIcon22 /> : <PhotoIcon2 />}
-            <p>Photo</p>
-          </Link>
-
-          <Link
-            href="/gift"
-            className={
-              activePath === "gift"
-                ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
-                : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
-            }
-          >
-            {/*  */}
-            {activePath === "gift" ? <GiftIcon2 /> : <GiftIcon22 />}
-            <p>Gift</p>
-          </Link>
+      {user?.role === "admin" && (
+        <div>
+          <SearchField
+            inputText={deferedValue}
+            setInputText={setInputText}
+            style={""}
+          />
         </div>
+      )}
+      <nav className="hidden lg:flex items-center justify-between h-[80px] shadow-sm px-20">
+        {user?.role !== "admin" && (
+          <div className="flex space-x-10 items-center">
+            <Link
+              href="/home"
+              className={
+                activePath === "home"
+                  ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
+                  : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
+              }
+            >
+              {activePath === "home" ? <HomeIcon2 /> : <HomeIcon22 />}
+              <p>Home</p>
+            </Link>
+
+            <Link
+              href="/photos"
+              className={
+                activePath === "photos"
+                  ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
+                  : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
+              }
+            >
+              {activePath === "photos" ? <PhotoIcon22 /> : <PhotoIcon2 />}
+              <p>Photo</p>
+            </Link>
+
+            <Link
+              href="/gift"
+              className={
+                activePath === "gift"
+                  ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
+                  : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
+              }
+            >
+              {/*  */}
+              {activePath === "gift" ? <GiftIcon2 /> : <GiftIcon22 />}
+              <p>Gift</p>
+            </Link>
+          </div>
+        )}
       </nav>
       <Link
         href="/profile"
@@ -108,43 +116,47 @@ export default function Header2() {
           </div>
           {toggle && (
             <div className="flex flex-col space-y-4 absolute top-20  bg-white p-4 rounded right-0 shadow">
-              <Link
-                href="/home"
-                className={
-                  activePath === "home"
-                    ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
-                    : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
-                }
-              >
-                {activePath === "home" ? <HomeIcon2 /> : <HomeIcon22 />}
+              {user?.role !== "admin" && (
+                <>
+                  <Link
+                    href="/home"
+                    className={
+                      activePath === "home"
+                        ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
+                        : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
+                    }
+                  >
+                    {activePath === "home" ? <HomeIcon2 /> : <HomeIcon22 />}
 
-                <p>Home</p>
-              </Link>
+                    <p>Home</p>
+                  </Link>
 
-              <Link
-                href="/photos"
-                className={
-                  activePath === "photos"
-                    ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
-                    : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
-                }
-              >
-                {activePath === "photos" ? <PhotoIcon22 /> : <PhotoIcon2 />}
+                  <Link
+                    href="/photos"
+                    className={
+                      activePath === "photos"
+                        ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
+                        : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
+                    }
+                  >
+                    {activePath === "photos" ? <PhotoIcon22 /> : <PhotoIcon2 />}
 
-                <p>Photo</p>
-              </Link>
+                    <p>Photo</p>
+                  </Link>
 
-              <Link
-                href="/gift"
-                className={
-                  activePath === "gift"
-                    ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
-                    : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
-                }
-              >
-                {activePath === "gift" ? <GiftIcon2 /> : <GiftIcon22 />}
-                <p>Gift</p>
-              </Link>
+                  <Link
+                    href="/gift"
+                    className={
+                      activePath === "gift"
+                        ? "cursor-pointer text-[#810A82] flex space-x-2 items-center"
+                        : "cursor-pointer text-[#AFAFAF] flex space-x-2 items-center"
+                    }
+                  >
+                    {activePath === "gift" ? <GiftIcon2 /> : <GiftIcon22 />}
+                    <p>Gift</p>
+                  </Link>
+                </>
+              )}
               <Link
                 href="/profile"
                 className={

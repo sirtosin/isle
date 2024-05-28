@@ -5,7 +5,7 @@ type Props = {
   style?: string;
   inputText: string;
   setInputText: (e: string) => void;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export function SearchField({ inputText, setInputText, disabled,style }: Props) {

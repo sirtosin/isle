@@ -57,10 +57,13 @@ export const useLoginQuery = () => {
       !data.success
         ? Toast({ title: data.response?.data?.error, error: true })
         : Toast({ title: "Login Successful", error: false });
-      handleReset(payload);
       if (data.success) {
+        handleReset(payload);
+        if (data?.profile?.role === "admin") {
+          navigate.push("/checkin");
+        }
         navigate.push("/home");
-        dispatch(login(data.profile));
+        dispatch(login(data?.profile));
         localStorage.setItem("auth", data?.token);
       }
       setSubmitting(false);
@@ -70,7 +73,7 @@ export const useLoginQuery = () => {
     },
   });
   const getOtp = async () => {
-    setSeconds(90)
+    setSeconds(90);
     setLoading2(true);
     const payload = {
       email: values.email,

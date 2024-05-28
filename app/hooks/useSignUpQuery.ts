@@ -66,7 +66,6 @@ export const useSignUpQuery = () => {
     mutationFn: () => postApi(`users`, payload),
     onSuccess: (data) => {
       //  Toast({ title: data.responseMessage, error: true });
-      console.log("data", data.data);
       handleReset(payload);
       setModal(true);
       dispatch(login(data?.data));
