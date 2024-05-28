@@ -61,6 +61,7 @@ export const useLoginQuery = () => {
         handleReset(payload);
         if (data?.profile?.role === "admin") {
           navigate.push("/checkin");
+          return
         }
         navigate.push("/home");
         dispatch(login(data?.profile));
