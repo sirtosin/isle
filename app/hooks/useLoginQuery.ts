@@ -58,16 +58,14 @@ export const useLoginQuery = () => {
         ? Toast({ title: data.response?.data?.error, error: true })
         : Toast({ title: "Login Successful", error: false });
       if (data.success) {
+        dispatch(login(data?.profile));
+        localStorage.setItem("auth", data?.token);
         handleReset(payload);
         if (data?.profile?.role === "admin") {
           navigate.push("/checkin");
-          dispatch(login(data?.profile));
-          localStorage.setItem("auth", data?.token);
           return;
         }
         navigate.push("/home");
-        dispatch(login(data?.profile));
-        localStorage.setItem("auth", data?.token);
       }
       setSubmitting(false);
     },
