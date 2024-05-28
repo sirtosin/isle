@@ -61,7 +61,9 @@ export const useLoginQuery = () => {
         handleReset(payload);
         if (data?.profile?.role === "admin") {
           navigate.push("/checkin");
-          return
+          dispatch(login(data?.profile));
+          localStorage.setItem("auth", data?.token);
+          return;
         }
         navigate.push("/home");
         dispatch(login(data?.profile));
