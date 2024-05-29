@@ -21,7 +21,7 @@ export default function page() {
   const handleFileChange = (event: any) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
-    formData.append("phone", `234${user?.phone?.toString().substring(0)}`);
+    formData.append("phone", user?.phone);
     setFile(event.target.files[0]);
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -44,6 +44,7 @@ export default function page() {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}uploads`, formData, fcloptions)
       .then((res: any) => {
+        console.log("res", res.data);
         Toast({ title: res?.data?.message, error: false });
       })
       .catch((err) => console.log("err", err));
