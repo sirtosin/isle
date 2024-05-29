@@ -59,6 +59,7 @@ export default function page() {
           allUserSearch?.map((item: any) => (
             <Card>
               <div
+              key={item?._id}
                 onClick={() => handleCheckin(item)}
                 className="cursor-pointer flex p-5 items-center justify-between"
               >

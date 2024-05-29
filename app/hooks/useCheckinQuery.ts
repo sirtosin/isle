@@ -22,9 +22,10 @@ export default function useCheckinQuery() {
     refetchOnReconnect: true,
     retry: 5,
     retryDelay: 100,
-    staleTime: 5000,
+    staleTime: 500,
     refetchOnMount: true,
-    refetchInterval: 120000, // 2 minutes
+    refetchInterval: 12000, // 2 minutes
+    // 2 minutes
     refetchIntervalInBackground: true,
     onSuccess(data: any) {
       //   Toast({ title: "page refreshed", error: false });
@@ -68,7 +69,6 @@ export default function useCheckinQuery() {
     }
     setLoading(false);
     handleModal();
-
   };
   const UnCheckUser = async (e: any) => {
     e?.preventDefault();
@@ -84,7 +84,6 @@ export default function useCheckinQuery() {
     }
     setLoading(false);
     handleModal();
-
   };
   return {
     setModal,
