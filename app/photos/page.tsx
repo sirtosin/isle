@@ -7,9 +7,12 @@ import axios from "axios";
 import { useAppSelector } from "../redux/hook";
 import { UploadPinIcon } from "../icons/Social";
 import { Toast } from "../components/Toast";
+import ModalCard from "../components/modal/Modal";
 
 export default function page() {
   const user = useAppSelector((state) => state.user.user);
+  const [image, setImage] = useState(null);
+  const [modal, setModal] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const { allImages } = usePhotoQuery();
   const hiddenFileInput = useRef<null | any>(null);
@@ -44,17 +47,31 @@ export default function page() {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}uploads`, formData, fcloptions)
       .then((res: any) => {
-        console.log("res", res.data);
         Toast({ title: res?.data?.message, error: false });
+        setFile(null);
+        setImageUrl('')
       })
       .catch((err) => console.log("err", err));
   };
   const handleClick = (event: React.FormEvent) => {
     hiddenFileInput?.current.click();
   };
+    const handleModal = (item: any) => {
+      setImage(item);
+      setModal((prev) => !prev);
+    };
   return (
     <div>
       <Header2 />
+      {modal && (
+        <div className="w-full sm:w-3/4 mx-auto">
+          <ModalCard open={modal} setOpen={() => setModal((prev) => !prev)}>
+            <div className="flex items-center justify-center">
+              <img className="w-full rounded " src={image?.imageUrl} alt="image" />
+            </div>
+          </ModalCard>
+        </div>
+      )}
       <section className="w-full sm:w-3/4 mx-auto p-5 sm:p-10">
         <Card>
           <div className="flex items-center space-y-4 flex-col  mx-auto">
@@ -85,6 +102,7 @@ export default function page() {
               className="hidden"
               type="file"
             />
+            <p>{imageUrl && "uploading..."}</p>
           </div>
           <div className="flex items-center flex-wrap justify-center sm:justify-center my-10">
             {allImages.isLoading ? (
@@ -94,8 +112,9 @@ export default function page() {
             ) : allImages?.data?.length > 0 ? (
               allImages?.data?.map((i: any) => (
                 <img
+                  onClick={() => handleModal(i)}
                   key={i._id}
-                  className="rounded size-32 m-3"
+                  className="rounded-md size-32 m-3 object-contain"
                   src={i?.imageUrl}
                   alt="image"
                 />
