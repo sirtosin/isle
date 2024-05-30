@@ -114,7 +114,7 @@ export default function page() {
                 <img
                   onClick={() => handleModal(i)}
                   key={i._id}
-                  className="rounded-md size-32 m-3 object-contain"
+                  className="rounded-md size-32 m-3 object-cover cursor-pointer"
                   src={i?.imageUrl}
                   alt="image"
                 />
