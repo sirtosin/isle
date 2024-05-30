@@ -67,7 +67,7 @@ export default function page() {
         <div className="w-full sm:w-3/4 mx-auto">
           <ModalCard open={modal} setOpen={() => setModal((prev) => !prev)}>
             <div className="flex items-center justify-center">
-              <img className="w-full rounded " src={image?.imageUrl} alt="image" />
+              <img className="w-full sm:h-[600px] sm:w-full rounded " src={image?.imageUrl} alt="image" />
             </div>
           </ModalCard>
         </div>
@@ -114,7 +114,7 @@ export default function page() {
                 <img
                   onClick={() => handleModal(i)}
                   key={i._id}
-                  className="rounded-md size-32 m-3 object-cover cursor-pointer"
+                  className="rounded-md size-32 m-3 object-fill cursor-pointer"
                   src={i?.imageUrl}
                   alt="image"
                 />
