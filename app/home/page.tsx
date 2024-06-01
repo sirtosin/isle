@@ -25,7 +25,7 @@ export default function page() {
               WalkTheAisle With Us
             </h2>
 
-            <Image src={bg} className="w-2/3" alt="" />
+            <Image src={bg} className="w-full sm:w-2/3" alt="" />
           </article>
           <article className="p-10">
             <div className="flex items-center w-full sm:w-1/2 mx-auto">
