@@ -126,6 +126,7 @@ export default function page() {
                 onBlur={handleBlur}
                 label="Phone Number:"
                 value={values.phone}
+                placeholder="8151204563"
               />
               {errors.phone ? (
                 <b className="text-xs text-red-700 italic">{errors.phone}</b>

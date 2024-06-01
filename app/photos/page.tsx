@@ -23,6 +23,7 @@ export default function page() {
   }
   const handleFileChange = (event: any) => {
     const formData = new FormData();
+    console.log("event.target.files[0]", event.target.files[0]);
     formData.append("image", event.target.files[0]);
     formData.append("phone", user?.phone);
     setFile(event.target.files[0]);
@@ -40,8 +41,8 @@ export default function page() {
     const fcloptions = {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${data}`,
         "Access-Control-Allow-Origin": "*",
+        Accept: "*",
       },
     };
     axios
@@ -49,17 +50,17 @@ export default function page() {
       .then((res: any) => {
         Toast({ title: res?.data?.message, error: false });
         setFile(null);
-        setImageUrl('')
+        setImageUrl("");
       })
       .catch((err) => console.log("err", err));
   };
   const handleClick = (event: React.FormEvent) => {
     hiddenFileInput?.current.click();
   };
-    const handleModal = (item: any) => {
-      setImage(item);
-      setModal((prev) => !prev);
-    };
+  const handleModal = (item: any) => {
+    setImage(item);
+    setModal((prev) => !prev);
+  };
   return (
     <div>
       <Header2 />
@@ -67,12 +68,16 @@ export default function page() {
         <div className="w-full sm:w-3/4 mx-auto">
           <ModalCard open={modal} setOpen={() => setModal((prev) => !prev)}>
             <div className="flex items-center justify-center">
-              <img className="w-full sm:h-[600px] sm:w-full rounded " src={image?.imageUrl} alt="image" />
+              <img
+                className="w-full sm:h-[600px] sm:w-full rounded "
+                src={image?.imageUrl}
+                alt="image"
+              />
             </div>
           </ModalCard>
         </div>
       )}
-      <section className="w-full sm:w-3/4 mx-auto p-5 sm:p-10">
+      <section className="w-full sm:w-3/4 mx-auto sm:p-10 ">
         <Card>
           <div className="flex items-center space-y-4 flex-col  mx-auto">
             <h2 className="font-bold text-center text-2xl mt-5">
@@ -104,7 +109,7 @@ export default function page() {
             />
             <p>{imageUrl && "uploading..."}</p>
           </div>
-          <div className="flex items-center flex-wrap justify-center sm:justify-center my-10">
+          <div className="flex items-center flex-wrap justify-center my-10">
             {allImages.isLoading ? (
               <p className="flex h-1/2 items-center justify-center text-center font-semibold text-gray-400 ">
                 fetching gallery...
