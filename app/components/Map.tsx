@@ -26,7 +26,7 @@ export default function SimpleMap() {
         <AnyReactComponent
           lat={6.625108316868475}
           lng={3.3571091031176414}
-          text="L.J. Dosumu St"
+          text="Beehive Hall"
         />
       </GoogleMapReact>
     </div>

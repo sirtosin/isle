@@ -51,9 +51,15 @@ export default function page() {
               </p>
             </div>
             {category === "address" ? (
-              <div className="flex items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-full  sm:w-3/4">
+              <div className="flex flex-col space-y-2 items-center space-x-4 border-[1px] border-[#959595] rounded-md px-5 sm:px-10 py-5 mx-auto mt-5 w-full  sm:w-3/4">
                 {/* <Location /> */}
                 <SimpleMap />
+                <a target="_blank"
+                  href="https://www.google.com/maps/place/Beehive+Hall/@6.6246829,3.3545222,17z/data=!3m1!4b1!4m6!3m5!1s0x103b9386c5a57c45:0x45b1a26ea50d130c!8m2!3d6.6246776!4d3.3570971!16s%2Fg%2F11ghpbnfdz?entry=ttu"
+                  className="text-[#810A82] text-sm"
+                >
+                  L.J. Dosumu St, adjacent Fela shrine, Agidingbi, Ikeja
+                </a>
               </div>
             ) : (
               <>

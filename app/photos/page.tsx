@@ -23,7 +23,6 @@ export default function page() {
   }
   const handleFileChange = (event: any) => {
     const formData = new FormData();
-    console.log("event.target.files[0]", event.target.files[0]);
     formData.append("image", event.target.files[0]);
     formData.append("phone", user?.phone);
     setFile(event.target.files[0]);
@@ -69,7 +68,7 @@ export default function page() {
           <ModalCard open={modal} setOpen={() => setModal((prev) => !prev)}>
             <div className="flex items-center justify-center">
               <img
-                className="w-full sm:h-[600px] sm:w-full rounded "
+                className="w-full sm:h-[600px] rounded object-fill"
                 src={image?.imageUrl}
                 alt="image"
               />
