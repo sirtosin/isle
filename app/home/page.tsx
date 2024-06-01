@@ -20,14 +20,14 @@ export default function page() {
       <section className="w-full sm:w-3/4 mx-auto p-5 sm:p-10">
         <Card>
           {/* <Countdown targetDate={"June 1, 2024 10:00:00"} /> */}
-          <article className="flex items-center justify-center space-y-4 flex-col p-10">
+          <article className="flex items-center justify-center space-y-4 flex-col p-5 sm:p-10">
             <h2 className=" font-bold text-2xl text-center">
               WalkTheAisle With Us
             </h2>
 
             <Image src={bg} className="w-full sm:w-2/3" alt="" />
           </article>
-          <article className="p-10">
+          <article className="p-5 sm:p-10">
             <div className="flex items-center w-full sm:w-1/2 mx-auto">
               <p
                 onClick={() => setCategory("address")}
