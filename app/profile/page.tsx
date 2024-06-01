@@ -120,7 +120,7 @@ export default function page() {
                   </span>
                   <span className="flex flex-col ">
                     <h2 className="text-[#ACACAC] text-sm">Phone Number:</h2>
-                    <p className="font-bold">{user?.phone}</p>
+                    <p className="font-bold">{`0${user?.phone?.substring(3)}`}</p>
                   </span>
                   <span className="flex flex-col ">
                     <h2 className="text-[#ACACAC] text-sm">Email:</h2>
